@@ -114,34 +114,7 @@ $("#predict").click(function(){
     
 
 })
-    // document.onkeypress = function (e) {
-    //     e = e || window.event;
-    //     console.log(e.key)
-    //     if (e.key=="v") {
-    //         // KNN.learn([landmark[0], landmark[1], landmark[2]], "Vuist")
-    //         // console.log("training........")
-    //         stop_train=false
-    //         trainvuist()
-    //     }
-
-    //     else if (e.key=="h") {
-    //         stop_train=false
-    //         trainhelehand()
-    //     }
-    //     else if (e.key=="c") {
-    //         $("#state").html("Prediction")
-    //         stop_train=true;
-    //         predictLandmarks()
-           
-    //     }
-    //     else if (e.key=="s") {
-    //         $("#state").html("Stop training")
-    //         stop_train=true;
-            
-           
-           
-    //     }
-    //     };
+   
         //new
 
 
@@ -169,22 +142,7 @@ async function trainvuist() {
      predictions.forEach((prediction) => {
         prediction.landmarks.forEach((landmark) => {
             KNN.learn([landmark[0], landmark[1], landmark[2]], "vuist")
-            $("#state").html("VUIST training")
-        
-        
-            
-
-          
-         //console.log(landmark)
-        //   numArray.push(landmark[0]);
-        //   numArray.push(landmark[1]);
-        //   numArray.push(landmark[2]);
-          
-
-     
-          
-
-           
+            $("#state").html("VUIST training")       
         });
       });
       
@@ -201,10 +159,7 @@ async function trainvuist() {
     if (stop_vuist==false){
         requestAnimationFrame(trainvuist) 
     }
-    
    
-    
-    // setTimeout(()=>predictLandmarks(), 1000)
 }
 
 
@@ -226,20 +181,7 @@ async function trainvijf() {
         if (stop_vijf==false){
             KNN.learn([landmark[0], landmark[1], landmark[2]], "Vijf Vingers")
             $("#state").html("VIJF VINGERS training")
-        }  
-        
-            
-
-          
-         //console.log(landmark)
-        //   numArray.push(landmark[0]);
-        //   numArray.push(landmark[1]);
-        //   numArray.push(landmark[2]);
-          
-
-     
-          
-
+        } 
            
         });
       });
@@ -282,18 +224,7 @@ async function predictLandmarks() {
         if (prediction=="vuist"){
             $("#result").html(prediction+ " ✊") 
         }
-        
-           
-         //console.log(landmark)
-        //   numArray.push(landmark[0]);
-        //   numArray.push(landmark[1]);
-        //   numArray.push(landmark[2]);
-          
-
-     
-          
-
-           
+    
         });
       });
       
@@ -309,49 +240,6 @@ async function predictLandmarks() {
     requestAnimationFrame(predictLandmarks)
     // setTimeout(()=>predictLandmarks(), 1000)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//new
-// async function train(){
-//     const classifier = knnClassifier.create();
-//    if(numArray.length>0){
-//     console.log(numArray)
-//     classifier.addExample(numArray, 'peace');
-//     classifier.addExample(numArray, 'thumbs up');
-//    }
-   
-// }
-
-// train()
-
-
-
-async function predictPose() {
-    const  predictions = await model.estimateHands(video);
-    // const numbers = convertHandPoseToNumbers(predictions);
-    const result = await classifier.predictClass(numArray);
-    console.log(result.label);
-  }
-
-
-
-
-
 
 //new
 
