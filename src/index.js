@@ -94,9 +94,10 @@ $("#vuist").click(function(){
 })
 
 $("#vijf_vingers").click(function(){
+    $("#state").html("Wait 3 seconds")
     stop_vijf=false
     stop_vuist=true
-    $("#state").html("Wait 3 seconds")
+    
   
     setTimeout(function(){
         trainvijf()
@@ -113,18 +114,7 @@ $("#predict").click(function(){
     predictLandmarks()
     
 
-})
-   
-        //new
-
-
-
-
-
-   
-
-
-    
+})   
 }
 
 //
@@ -142,7 +132,7 @@ async function trainvuist() {
      predictions.forEach((prediction) => {
         prediction.landmarks.forEach((landmark) => {
             KNN.learn([landmark[0], landmark[1], landmark[2]], "vuist")
-            $("#state").html("VUIST training")       
+            $("#state").html("VUIST training")      
         });
       });
       
@@ -153,17 +143,11 @@ async function trainvuist() {
         drawHand(ctx, predictions[0].landmarks, predictions[0].annotations)
     }
 
-    //console.log(numArray)//new
-    // 60 keer per seconde is veel, gebruik setTimeout om minder vaak te predicten
     
     if (stop_vuist==false){
         requestAnimationFrame(trainvuist) 
     }
-   
 }
-
-
-
 
 ///////
 async function trainvijf() {
@@ -181,13 +165,11 @@ async function trainvijf() {
         if (stop_vijf==false){
             KNN.learn([landmark[0], landmark[1], landmark[2]], "Vijf Vingers")
             $("#state").html("VIJF VINGERS training")
-        } 
+        }  
            
         });
       });
       
-
-     //new
 
         //console.log(predictions)
         drawHand(ctx, predictions[0].landmarks, predictions[0].annotations)
@@ -198,10 +180,6 @@ async function trainvijf() {
     if (stop_vijf==false){
         requestAnimationFrame(trainvijf)
     }
-    
-   
-    
-    // setTimeout(()=>predictLandmarks(), 1000)
 }
 ////////////////////////////////////////////////
 
@@ -224,32 +202,23 @@ async function predictLandmarks() {
         if (prediction=="vuist"){
             $("#result").html(prediction+ " ✊") 
         }
-    
+           
         });
       });
       
-
-     //new
-
-        //console.log(predictions)
         drawHand(ctx, predictions[0].landmarks, predictions[0].annotations)
     }
 
-    //console.log(numArray)//new
-    // 60 keer per seconde is veel, gebruik setTimeout om minder vaak te predicten
     requestAnimationFrame(predictLandmarks)
-    // setTimeout(()=>predictLandmarks(), 1000)
 }
 
-//new
+async function predictPose() {
+    const  predictions = await model.estimateHands(video);
+    const result = await classifier.predictClass(numArray);
+    console.log(result.label);
+  }
 
-//
-// teken hand en vingers met de x,y coordinaten. de z waarde tekenen we niet.
-//
 function drawHand(ctx, keypoints, annotations) {
-    // toon alle x,y,z punten van de hele hand in het log venster
-    //log.innerText = keypoints.flat()
-    //console.log(keypoints.flat())
 
     // punten op alle kootjes kan je rechtstreeks uit keypoints halen 
     for (let i = 0; i < keypoints.length; i++) {
